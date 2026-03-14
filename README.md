@@ -1,0 +1,1 @@
+![Texto Alternativo](/readmeImage.png)
