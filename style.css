@@ -1,0 +1,271 @@
+:root {
+  --bg: #f7f4ef;
+  --surface: #fff9ee;
+  --surface-strong: #fff;
+  --text: #2d261f;
+  --muted: #64594d;
+  --accent: #d66f25;
+  --accent-strong: #b65312;
+  --line: #ecdcc8;
+  --shadow: 0 12px 28px rgba(89, 57, 29, 0.14);
+  --danger: #c85f4c;
+  --danger-strong: #aa4737;
+  --done-bg: #f2f8ef;
+  --done-line: #c8ddbd;
+  --done-text: #3a6442;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 8% 10%, #ffe7c7 0%, transparent 26%),
+    radial-gradient(circle at 90% 12%, #fff2ca 0%, transparent 24%),
+    linear-gradient(165deg, #f9f5ef 0%, #efdfcb 100%);
+  min-height: 100vh;
+}
+
+.app-shell {
+  width: min(1100px, 92vw);
+  margin: 2rem auto 3rem;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 2.6vw, 2.8rem);
+  letter-spacing: -0.04em;
+}
+
+.app-header p {
+  margin: 0.6rem 0 0;
+  color: var(--muted);
+}
+
+.hero-actions {
+  margin-top: 1.4rem;
+  padding: 0.8rem;
+  display: flex;
+  gap: 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 1.1rem;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.hero-actions input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-strong);
+}
+
+.hero-actions input:focus {
+  outline: 2px solid rgba(214, 111, 37, 0.45);
+  border-color: var(--accent);
+}
+
+.hero-actions button {
+  width: 52px;
+  border: none;
+  border-radius: 0.75rem;
+  font: inherit;
+  font-size: 1.65rem;
+  line-height: 1;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(170deg, #ef8d47, var(--accent));
+  cursor: pointer;
+  transition: transform 140ms ease, background 140ms ease;
+}
+
+.hero-actions button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(170deg, #e57b2b, var(--accent-strong));
+}
+
+.hero-actions button:active {
+  transform: translateY(1px);
+}
+
+.content {
+  margin-top: 1.25rem;
+}
+
+.content-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem;
+}
+
+.task-card {
+  min-height: 130px;
+  padding: 1rem;
+  border-radius: 0.95rem;
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+  box-shadow: 0 10px 22px rgba(107, 70, 40, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transform-origin: center;
+  animation: cardIn 240ms ease;
+}
+
+.task-card h2,
+.task-title {
+  margin: 0;
+  font-size: 1.06rem;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.task-card p {
+  margin: 0.55rem 0 0;
+  color: var(--muted);
+  font-size: 0.93rem;
+}
+
+.task-card--placeholder {
+  border-style: dashed;
+  background:
+    linear-gradient(to right, rgba(255, 246, 230, 0.96), rgba(255, 250, 239, 0.96));
+}
+
+.task-actions {
+  margin-top: auto;
+  display: flex;
+  gap: 0.55rem;
+}
+
+.task-btn {
+  border: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.65rem;
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 140ms ease, opacity 140ms ease, filter 140ms ease;
+}
+
+.task-btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+}
+
+.task-btn:active {
+  transform: translateY(1px);
+}
+
+.task-btn[disabled] {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.task-btn-complete {
+  background: linear-gradient(170deg, #ef8d47, var(--accent));
+}
+
+.task-btn-delete {
+  background: linear-gradient(170deg, #d67d6f, var(--danger));
+}
+
+.task-card.is-completed {
+  background: var(--done-bg);
+  border-color: var(--done-line);
+}
+
+.task-card.is-completed .task-title {
+  color: var(--done-text);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(58, 100, 66, 0.45);
+}
+
+.task-card.is-finishing {
+  animation: concludeCard 320ms ease forwards;
+}
+
+.task-card.is-removing {
+  pointer-events: none;
+  animation: deleteCard 320ms ease forwards;
+}
+
+@keyframes cardIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes concludeCard {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 10px 22px rgba(107, 70, 40, 0.08);
+  }
+
+  45% {
+    transform: scale(1.02);
+    box-shadow: 0 14px 28px rgba(90, 136, 78, 0.18);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes deleteCard {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    max-height: 300px;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -0.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .app-shell {
+    width: min(1100px, 94vw);
+    margin-top: 1.2rem;
+  }
+
+  .hero-actions {
+    padding: 0.65rem;
+  }
+
+  .hero-actions input {
+    padding: 0.78rem 0.8rem;
+  }
+
+  .hero-actions button {
+    width: 46px;
+    font-size: 1.5rem;
+  }
+}
